@@ -1,1 +1,6 @@
-
+Libraries->
+   numpy
+   Pandas
+   Sklearn
+   Seaborn
+   Matplotlib
