@@ -4,7 +4,6 @@ import pandas as pd
 
 # Load model
 model = joblib.load("diamond.pkl")
-expected_col = joblib.load("D_COl.pkl")
 
 # Page configuration
 st.set_page_config(
