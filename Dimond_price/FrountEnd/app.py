@@ -3,7 +3,11 @@ import joblib
 import pandas as pd
 
 # Load model
-model = joblib.load("diamond.pkl")
+# model = joblib.load("diamond.pkl")
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+model = joblib.load(BASE_DIR / "diamond.pkl")
 
 # Page configuration
 st.set_page_config(
