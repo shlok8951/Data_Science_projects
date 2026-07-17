@@ -321,7 +321,6 @@ if st.button("🔮 Predict Diamond Price"):
 
     input_df = pd.DataFrame(input_data)
 
-    input_df = input_df[expected_col]
 
     prediction = model.predict(input_df)[0]
 
