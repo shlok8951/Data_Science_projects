@@ -102,7 +102,7 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
     rows = (len(cards) + cols - 1) // cols
     idx = 0
     for r in range(rows):
-        colset = st.columns(cols)
+        colset = st.columns(cols, gap="large")
         for c in range(cols):
             if idx >= len(cards):
                 break
@@ -115,7 +115,7 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
 
             with colset[c]:
                 if poster:
-                    st.image(poster, width=200)
+                    st.image(poster, use_container_width=True)
                 else:
                     st.write("🖼️ No poster")
 
