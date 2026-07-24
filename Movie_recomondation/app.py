@@ -74,6 +74,39 @@ def api_get_json(path: str, params: dict | None = None):
         return None, f"Request failed: {e}"
 
 
+# def poster_grid(cards, cols=6, key_prefix="grid"):
+#     if not cards:
+#         st.info("No movies to show.")
+#         return
+
+#     rows = (len(cards) + cols - 1) // cols
+#     idx = 0
+#     for r in range(rows):
+#         colset = st.columns(cols)
+#         for c in range(cols):
+#             if idx >= len(cards):
+#                 break
+#             m = cards[idx]
+#             idx += 1
+
+#             tmdb_id = m.get("tmdb_id")
+#             title = m.get("title", "Untitled")
+#             poster = m.get("poster_url")
+
+#             with colset[c]:
+#                 if poster:
+#                     st.image(poster, width=200)
+#                 else:
+#                     st.write("🖼️ No poster")
+
+#                 if st.button("Open", key=f"{key_prefix}_{r}_{c}_{idx}_{tmdb_id}"):
+#                     if tmdb_id:
+#                         goto_details(tmdb_id)
+
+#                 st.markdown(
+#                     f"<div class='movie-title'>{title}</div>", unsafe_allow_html=True
+#                 )
+
 def poster_grid(cards, cols=6, key_prefix="grid"):
     if not cards:
         st.info("No movies to show.")
@@ -81,11 +114,15 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
 
     rows = (len(cards) + cols - 1) // cols
     idx = 0
+
     for r in range(rows):
-        colset = st.columns(cols)
+        # add spacing between columns
+        colset = st.columns(cols, gap="large")
+
         for c in range(cols):
             if idx >= len(cards):
                 break
+
             m = cards[idx]
             idx += 1
 
@@ -94,18 +131,31 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
             poster = m.get("poster_url")
 
             with colset[c]:
+                # card spacing
+                st.markdown(
+                    "<div style='padding:10px; margin-bottom:20px;'>",
+                    unsafe_allow_html=True
+                )
+
                 if poster:
-                    st.image(poster, width=200)
+                    st.image(poster, width=180)
                 else:
                     st.write("🖼️ No poster")
 
-                if st.button("Open", key=f"{key_prefix}_{r}_{c}_{idx}_{tmdb_id}"):
+                if st.button(
+                    "Open",
+                    key=f"{key_prefix}_{r}_{c}_{idx}_{tmdb_id}"
+                ):
                     if tmdb_id:
                         goto_details(tmdb_id)
 
                 st.markdown(
-                    f"<div class='movie-title'>{title}</div>", unsafe_allow_html=True
+                    f"<div class='movie-title'>{title}</div>",
+                    unsafe_allow_html=True
                 )
+
+                st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 def to_cards_from_tfidf_items(tfidf_items):
@@ -213,7 +263,7 @@ with st.sidebar:
         ["trending", "popular", "top_rated", "now_playing", "upcoming"],
         index=0,
     )
-    grid_cols = st.slider("Grid columns", 4, 8, 6)
+    grid_cols = st.slider("Grid columns", 3, 8, 5)
 
 # =============================
 # HEADER
