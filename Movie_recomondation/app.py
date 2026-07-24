@@ -138,7 +138,8 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
                 )
 
                 if poster:
-                    st.image(poster, width=180)
+                    img_width = max(100, int(900 / cols))
+                    st.image(poster, width=img_width)
                 else:
                     st.write("🖼️ No poster")
 
