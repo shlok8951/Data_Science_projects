@@ -63,15 +63,33 @@ def goto_details(tmdb_id: int):
 # =============================
 # API HELPERS
 # =============================
-@st.cache_data(ttl=30)  # short cache for autocomplete
-def api_get_json(path: str, params: dict | None = None):
-    try:
-        r = requests.get(f"{API_BASE}{path}", params=params, timeout=25)
-        if r.status_code >= 400:
-            return None, f"HTTP {r.status_code}: {r.text[:300]}"
-        return r.json(), None
-    except Exception as e:
-        return None, f"Request failed: {e}"
+# @st.cache_data(ttl=30)  # short cache for autocomplete
+# def api_get_json(path: str, params: dict | None = None):
+#     try:
+#         r = requests.get(f"{API_BASE}{path}", params=params, timeout=25)
+#         if r.status_code >= 400:
+#             return None, f"HTTP {r.status_code}: {r.text[:300]}"
+#         return r.json(), None
+#     except Exception as e:
+#         return None, f"Request failed: {e}"
+@st.cache_data(ttl=30)
+def api_get_json(path: str, params=None):
+    url = f"{API_BASE}{path}"
+
+    st.write("Calling:", url)
+    st.write("Params:", params)
+
+    r = requests.get(url, params=params, timeout=25)
+
+    st.write("Status:", r.status_code)
+    st.write("Final URL:", r.url)
+    st.write("Response:", r.text[:300])
+
+    if r.status_code >= 400:
+        return None, f"HTTP {r.status_code}: {r.text}"
+
+    return r.json(), None
+
 
 
 def poster_grid(cards, cols=6, key_prefix="grid"):
