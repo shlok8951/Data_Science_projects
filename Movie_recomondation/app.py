@@ -264,7 +264,7 @@ with st.sidebar:
         ["trending", "popular", "top_rated", "now_playing", "upcoming"],
         index=0,
     )
-    grid_cols = st.slider("Grid columns", 3, 8, 5)
+    grid_cols = st.slider("Grid columns", 3, 7, 5)
 
 # =============================
 # HEADER
